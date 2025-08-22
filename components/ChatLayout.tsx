@@ -63,9 +63,10 @@ const ChatLayout: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (chats.length > 0) {
-      localStorage.setItem('teacher-ai-chats', JSON.stringify(chats));
-    }
+    // Persist chats to local storage whenever they change.
+    // This handles additions, deletions, and updates.
+    // If chats becomes empty, it will store an empty array, which is correct.
+    localStorage.setItem('teacher-ai-chats', JSON.stringify(chats));
   }, [chats]);
 
   const updateMessages = (chatId: string, updateFn: (messages: Message[]) => Message[]) => {
@@ -90,15 +91,33 @@ const ChatLayout: React.FC = () => {
   };
   
   const deleteChat = (chatId: string) => {
-    const remainingChats = chats.filter(c => c.id !== chatId);
-    setChats(remainingChats);
-    if (activeChatId === chatId) {
-        if(remainingChats.length > 0) {
-             setActiveChatId(remainingChats[0]?.id || null);
+    setChats(prevChats => {
+      const remainingChats = prevChats.filter(c => c.id !== chatId);
+      
+      // Handle if the deleted chat was the active one
+      if (activeChatId === chatId) {
+        if (remainingChats.length > 0) {
+          // There are other chats, make the first one active
+          setActiveChatId(remainingChats[0].id);
         } else {
-             createNewChat();
+          // This was the last chat. Create a new one.
+          const newChatId = `chat-${Date.now()}`;
+          const newChat: ChatSession = {
+            id: newChatId,
+            title: 'New Chat',
+            messages: [{
+                id: 'initial-ai-message',
+                role: MessageRole.MODEL,
+                content: "Hello! I'm your Teacher AI. Ask me a question, and I'll break it down for you with text and visuals for each step!"
+            }]
+          };
+          setActiveChatId(newChatId);
+          return [newChat]; // The new state is an array with just the new chat
         }
-    }
+      }
+      
+      return remainingChats;
+    });
   };
 
   const handleCancelGeneration = () => {
