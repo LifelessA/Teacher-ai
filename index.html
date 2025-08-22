@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .prose {
+        --tw-prose-body: currentColor;
+        --tw-prose-headings: currentColor;
+        --tw-prose-lead: currentColor;
+        --tw-prose-links: #3b82f6; /* blue-500 */
+        --tw-prose-bold: currentColor;
+        --tw-prose-counters: currentColor;
+        --tw-prose-bullets: currentColor;
+        --tw-prose-hr: currentColor;
+        --tw-prose-quotes: currentColor;
+        --tw-prose-quote-borders: currentColor;
+        --tw-prose-captions: currentColor;
+        --tw-prose-code: currentColor;
+        --tw-prose-pre-code: #e5e7eb; /* gray-200 */
+        --tw-prose-pre-bg: #1f2937; /* gray-800 */
+        --tw-prose-th-borders: currentColor;
+        --tw-prose-td-borders: currentColor;
+      }
+      .dark .prose {
+        --tw-prose-links: #60a5fa; /* blue-400 */
+        --tw-prose-pre-code: #d1d5db; /* gray-300 */
+        --tw-prose-pre-bg: #374151; /* gray-700 */
+      }
+       /* Custom styles for links within prose */
+      .prose a {
+        font-weight: 500;
+        text-decoration: none;
+        transition: text-decoration 0.2s ease-in-out;
+      }
+      .prose a:hover {
+        text-decoration: underline;
+      }
+      /* Custom styles for inline code */
+      .prose :where(code):not(:where([class~="not-prose"] *)) {
+        background-color: rgba(128, 128, 128, 0.1);
+        padding: 0.1em 0.3em;
+        border-radius: 0.25rem;
+        font-weight: 500;
+        border: 1px solid rgba(128, 128, 128, 0.15);
+      }
+
+      /* Animation for step-by-step reveal */
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes slideInUp {
+          from { transform: translateY(20px); }
+          to { transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+          animation: fadeIn 0.5s ease-out, slideInUp 0.5s ease-out;
+      }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.15.0",
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "marked": "https://esm.sh/marked@^13.0.2",
+    "google-one-tap": "https://esm.sh/google-one-tap@^1.0.6"
+  }
+}
+</script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
